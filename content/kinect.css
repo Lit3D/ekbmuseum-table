@@ -1,0 +1,14 @@
+.depth-canvas {
+  --width: 512;
+  --height: 424;
+
+  display: block;
+  position: fixed;
+  left: calc(50vw - var(--width) * 1px / 2);
+  top: calc(50vh - var(--height) * 1px / 2);
+  width: calc(var(--width) * 1px);
+  height: calc(var(--height) * 1px);
+
+  z-index: 999;
+  box-shadow: 0 0 100px rgb(0 0 0 / .7);
+}

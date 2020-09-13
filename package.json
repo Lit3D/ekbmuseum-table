@@ -1,0 +1,29 @@
+{
+  "name": "ekbmuseum-table",
+  "description": "Museum of the History of Yekaterinburg touch stand with city layout",
+  "version": "1.0.0",
+  "main": "app/main.js",
+  "scripts": {
+    "clean": "rimraf ./build/*",
+    "pack": "electron-packager ./ lit3d-shell --platform=win32 --arch=x64 --overwrite --out=./build",
+    "release": "set NODE_ENV=production&& npm run clean && npm run pack",
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "https://github.com/lit3d/ekbmuseum-table",
+  "homepage": "https://github.com/lit3d/ekbmuseum-table",
+  "bugs": "https://github.com/lit3d/ekbmuseum-table/issues",
+  "author": "Lit3D <dev@lit3d.io> (https://github.com/lit3d)",
+  "contributors": [
+    "Wisdman <wisdman@wisdman.io> (https://github.com/wisdman)",
+    "Yulia Fedyakina <iulia.fedyakina@gmail.com> (https://github.com/saigach)"
+  ],
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^10.1.1",
+    "electron-packager": "^15.1.0",
+    "rimraf": "^3.0.2"
+  }
+}

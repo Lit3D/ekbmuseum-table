@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Table</title>
+  <link rel="stylesheet" type="text/css" href="table.css">
+  <script type="text/javascript">
+    const { ipcRenderer } = require("electron")
+
+    function openInWall(id) {
+      ipcRenderer.send("message", {
+        from: "table",
+        to: "wall",
+        type: "content",
+        detail: id
+      })
+    }
+  </script>
+</head>
+<body>
+
+<!-- <div style="width: 100vw; height: 100vh; position: fixed; border: 10px solid red; box-sizing: border-box;"></div> -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1200" preserveAspectRatio="none">
+
+    <polygon onclick="openInWall(10);" fill="#fff" class="fadeInOut" points="406 126,408 170,409 239,426 239,424 281,411 285,410 369,297 372,297 314,347 312,346 277,374 278,373 241,354 245,347 204,268 207,271 373,167 372,164 172,163 123" style="transform: translateX(-23px) translateY(-16px);">
+    </polygon>
+
+    <polygon onclick="openInWall(11);" fill="#fff" class="fadeInOut" style="animation-delay: 2s; transform: translate(-16px, 0px)" points="763 377,832 376,836 480,764 480">
+    </polygon>
+
+    <polygon onclick="openInWall(9);" fill="#fff" class="fadeInOut" style="animation-delay: 4s; transform: translate(-14px, 6px);" points="1225 209,1864 206,1866 264,1846 355,1779 355,1783 322,1673 326,1661 358,1570 356,1567 321,1447 323,1445 354,1359 354,1361 324,1216 322">
+    </polygon>
+
+    <polygon onclick="openInWall(8);" fill="#fff" class="fadeInOut" style="animation-delay: 6s" points="1362 378,1461 378,1456 418,1625 413,1633 458,1620 516,1299 513,1284 418,1364 422">
+    </polygon>
+
+    <polygon onclick="openInWall(7);" fill="#fff" class="fadeInOut" style="animation-delay: 8s" points="1447 684,1461 805,1176 801,1172 680">
+    </polygon>
+
+    <polygon onclick="openInWall(6);" fill="#fff" class="fadeInOut" style="animation-delay: 10s" points="1859 681,1851 786,1548 786,1533 673">
+    </polygon>
+
+    <polygon onclick="openInWall(4);" fill="#fff" class="fadeInOut" style="animation-delay: 12s; transform: translate(-12px, 7px);" points="1627 890,1608 979,923 954,914 1057,841 1057,857 954,584 944,605 844,750 853,750 816,810 823,823 853,952 862,948 832,1014 836,1020 866,1137 871,1152 846,1218 848,1225 876,1469 882,1460 867,1547 869,1569 888">
+    </polygon>
+
+    <polygon onclick="openInWall(1);" fill="#fff" class="fadeInOut" style="animation-delay: 14s; transform: translate(-21px, 10px);" points="1855 892,1861 1105,1761 1108,1762 969,1728 969,1728 1002,1694 1000,1695 971,1632 970,1649 881">
+    </polygon>
+
+    <polygon onclick="openInWall(5);" fill="#fff" class="fadeInOut" style="animation-delay: 16s; transform: translate(-30px, 0px);" points="408 959,607 968,605 1025,413 1024">
+    </polygon>
+
+    <polygon onclick="openInWall(3);" fill="#fff" class="fadeInOut" style="animation-delay: 18s; transform: translate(-13px, 7px);" points="1085 1067,1491 1061,1493 1092,1512 1091,1510 1122,1098 1127">
+    </polygon>
+
+    <polygon onclick="openInWall(2);" fill="#fff" class="fadeInOut" style="animation-delay: 20s; transform: translate(-9px, 4px);" points="1531 1099,1550 1066,1586 1066,1601 1098,1588 1127,1548 1128">
+    </polygon>
+
+  </svg>
+
+  <!-- <div class="spinning-icon-container" id="icon1">
+    <div class="spinning-icon">i</div>
+    <div class="spinning-icon-back">i</div>
+    <div class="spinning-icon-shadow"></div>
+  </div>
+
+
+  <div class="spinning-icon-container" id="icon2">
+    <div class="spinning-icon">i</div>
+    <div class="spinning-icon-back">i</div>
+    <div class="spinning-icon-shadow"></div>
+  </div>
+
+  <div class="spinning-icon-container" id="icon3">
+    <div class="spinning-icon">i</div>
+    <div class="spinning-icon-back">i</div>
+    <div class="spinning-icon-shadow"></div>
+  </div>
+
+    <div class="spinning-icon-container" id="icon4">
+    <div class="spinning-icon">i</div>
+    <div class="spinning-icon-back">i</div>
+    <div class="spinning-icon-shadow"></div>
+  </div>
+
+    <div class="spinning-icon-container" id="icon5">
+    <div class="spinning-icon">i</div>
+    <div class="spinning-icon-back">i</div>
+    <div class="spinning-icon-shadow"></div>
+  </div>
+
+    <div class="spinning-icon-container" id="icon6">
+    <div class="spinning-icon">i</div>
+    <div class="spinning-icon-back">i</div>
+    <div class="spinning-icon-shadow"></div>
+  </div>
+
+    <div class="spinning-icon-container" id="icon7">
+    <div class="spinning-icon">i</div>
+    <div class="spinning-icon-back">i</div>
+    <div class="spinning-icon-shadow"></div>
+  </div>
+
+      <div class="spinning-icon-container" id="icon8">
+    <div class="spinning-icon">i</div>
+    <div class="spinning-icon-back">i</div>
+    <div class="spinning-icon-shadow"></div>
+  </div>
+
+      <div class="spinning-icon-container" id="icon9">
+    <div class="spinning-icon">i</div>
+    <div class="spinning-icon-back">i</div>
+    <div class="spinning-icon-shadow"></div>
+  </div>
+
+      <div class="spinning-icon-container" id="icon10">
+    <div class="spinning-icon">i</div>
+    <div class="spinning-icon-back">i</div>
+    <div class="spinning-icon-shadow"></div>
+  </div>
+
+      <div class="spinning-icon-container" id="icon11">
+    <div class="spinning-icon">i</div>
+    <div class="spinning-icon-back">i</div>
+    <div class="spinning-icon-shadow"></div>
+  </div> -->
+
+
+
+<a href="" class="item item-12" id="item-12"></a>
+    <svg>
+    <!--path fill="#575656" d="M0 0h1920v1200H0z"/-->
+    <!-- <path fill="#575656" d="M0 0h2880v1800H0z"/> -->
+    <defs>
+      <clipPath id="river">
+  <path class="st0" d="M1124.5 706.7V571.3c-27.8.6-90.6 18.1-106 26.7s-560.1 16.6-560.1 16.6l-48.1 72.7s583.6-11 596.6-9.5 57.8 22.5 117.6 28.9M1285.7 381.8c19.8.4 39.6 0 59.4 0l62.9 1c1.5 0 3.3.9 5.1 2.3h-2.7v14.6h7.9v8.8h-4.6v5.9l-1.8 1H1345V434h-61.9c-2.1 0-3.7.2-3.7-5.3v-41.4c.1-3.7 3.7-5.6 6.3-5.5M381.2 688.1C278.7 700.8 88 739.1 0 807.7V621.9l431.7-2.2-50.5 68.4z"/>
+  <path class="st1" d="M1166.7 605.6h291.1v62.3h-291.1zM1472.6 610H1841v58h-368.4z"/>
+  <path class="st0" d="M1461 898.2s1-23.8 3.6-25.5c2.7-1.6 95.6-12 98.7-11.5s1.9 29.7 1.9 29.7l6.6.6-.4-6.5h96.5v-23.9h69.1s6.8-.5 6.5 3c-.2 3.6 0 29.8 0 29.8l79.8.9v13.9l-105.6-1.1V885h-25.2v22.1l-131-2.8h-.2V885h-15v16.7l-54-2.1v-2.9h2.7V883h-9.6v13.7h2.7v2.4l-27.1-.9z"/>
+  <path class="st1" d="M1434.5 389.8h410.2v5.5h-410.2z"/>
+      </clipPath>
+    </defs>
+  </svg>
+
+
+<a onclick="openInWall(0);" class="more-button">
+<svg viewBox="0 0 581 69"><defs><style>.cls-1{fill:#c5c6c6;fill-rule:evenodd}.cls-2{fill:#575656}</style></defs><path class="cls-1" d="M7 0h566a7 7 0 018 7v55a7 7 0 01-8 7H7a7 7 0 01-7-7V7a7 7 0 017-7"/><path class="cls-2" d="M442 52h-20V17h20v5h-14v9h13v5h-13v11h13zm-47-5h12V17h6v35h-42V17h6v30h12V17h6zm-49 0h5a11 11 0 006-1 5 5 0 002-5 5 5 0 00-2-4l-7-1h-4zm19-6a9 9 0 01-4 8q-3 3-10 3h-10V17h5v14h5q7 0 10 3a9 9 0 014 7zm-33 11h-6V22h-10l-3 21c0 3-1 6-3 7a7 7 0 01-5 2 9 9 0 01-3 0v-5a7 7 0 002 1 3 3 0 003-2l2-9 3-20h20zm-60-18c0 5 1 8 3 10s4 3 8 3 5-1 7-3 3-5 3-10-1-7-3-9-4-3-7-3-6 1-8 3-3 5-3 9zm27 0q0 9-5 13c-2 4-6 5-11 5s-10-1-12-5-4-7-4-13 1-10 4-13 6-4 12-4 9 1 11 4 5 8 5 13zm-55 13h4l6-1a5 5 0 002-5 5 5 0 00-2-4l-7-1h-3zm17-6q0 11-13 11h-10V17h21v5h-15v9h4q13 0 13 10zm-59-26l-7-2c-2-1-2-3-2-6h5a7 7 0 000 2 3 3 0 002 2 8 8 0 003 0 5 5 0 003-1 5 5 0 001-3h6a8 8 0 01-3 6l-8 2zm-14 2h5v24l-1 4h1l17-28h7v35h-5V34 24l-18 28h-6zm-16 20l-3-9a64 64 0 01-2-6 53 53 0 01-2 6l-3 9zm5 15l-3-10h-13l-4 10h-6l13-35h6l13 35zm-30 0h-6V36h-15v16h-6V17h6v14h15V17h6zm-35-27a7 7 0 01-2 6 11 11 0 01-6 3 12 12 0 017 2 7 7 0 012 6 9 9 0 01-4 7c-2 2-6 3-10 3q-7 0-11-2v-5a23 23 0 005 2 26 26 0 005 1q9 0 9-6a4 4 0 00-2-4l-8-2h-5v-4h4q11 0 11-6a4 4 0 00-2-3 8 8 0 00-5-2 17 17 0 00-5 1 18 18 0 00-4 2l-3-3a21 21 0 0112-4l9 2a7 7 0 013 6zm-26-8L75 42a29 29 0 01-4 6 10 10 0 01-3 3 13 13 0 01-6 1 17 17 0 01-5-1v-5a13 13 0 005 1 6 6 0 004-1 9 9 0 002-3L56 17h6l8 18a32 32 0 011 3h1a15 15 0 010-2l8-19z"/><path d="M502 12a23 23 0 11-23 23 23 23 0 0123-23" fill="#575656" fill-rule="evenodd"/><path class="cls-2" d="M524 35a21 21 0 10-7 15 21 21 0 007-15m-22-25a24 24 0 11-24 25 24 24 0 0124-25z"/><path class="cls-1" d="M493 20l12 7 12 8-12 7-12 7V20z"/></svg>
+</a>
+
+</body>
+</html>

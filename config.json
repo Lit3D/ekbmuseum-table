@@ -1,0 +1,18 @@
+{
+  "id": "plotina",
+  "viewPorts":[{
+    "id": "table",
+    "x": -1920,
+    "y": 0,
+    "width": 1920,
+    "height": 1080,
+    "fullscreen": true
+  },{
+    "id": "wall",
+    "x": 0,
+    "y": 0,
+    "width": 1920,
+    "height": 1080,
+    "fullscreen": true
+  }]
+}
