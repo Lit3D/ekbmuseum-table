@@ -8,7 +8,7 @@ const MIN_SENSE = 3
 const MAX_SENSE = 30
 
 const FRAME_SIZE = 100
-const FRAME_POINTS_TO_ACTIVE = 100
+const POINTS_TO_ACTIVE = 100
 
 const DATA_URL = "kinect.json"
 
@@ -119,10 +119,7 @@ export class Kinect {
   #min_depth = MIN_DEPTH
   #max_depth = MAX_DEPTH
 
-  //#min_sens = MIN_SENSE
-  //#max_sens = MAX_SENSE
-
-  //#depthDelta = 0
+  #pathos = POINTS_TO_ACTIVE
 
   #frames = []
   get isFrameActive() { return this.#frames.some(f => f.selected) }
@@ -188,7 +185,7 @@ export class Kinect {
       //   this.#depthDelta = Math.ceil(this.#depthDelta)
       //   console.log(`#depthDelta = ${this.#depthDelta}`)
       // }, 30 * 1000) // 10 sec
-    }, 30 * 1000) // 10 sec
+    }, 10 * 1000) // 10 sec
   }
 
   #trainingDepthMode = false
@@ -227,7 +224,7 @@ export class Kinect {
           if (dd > MIN_SENSE && dd < MAX_SENSE) activePoints++
         }
       }
-      frame.active = activePoints > 10
+      frame.active = activePoints > this.#pathos
     }
   }
 
@@ -349,6 +346,13 @@ export class Kinect {
     switch(event.key.toUpperCase()) {
       case "K":
         this.visible = !this.visible
+        break
+
+      case "P":
+        const pathos = Number.parseInt(prompt("Enter points to active value", this.#pathos))
+        if (Number.isFinite(pathos)) {
+          this.#pathos = pathos
+        }
         break
 
       case "S":
