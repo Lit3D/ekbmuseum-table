@@ -120,6 +120,8 @@ export class Kinect {
   #max_depth = MAX_DEPTH
 
   #pathos = POINTS_TO_ACTIVE
+  #min_sense = MIN_SENSE
+  #max_sense = MAX_SENSE
 
   #frames = []
   get isFrameActive() { return this.#frames.some(f => f.selected) }
@@ -221,7 +223,7 @@ export class Kinect {
           if  (etalon <= 0 || value <= 0) continue
 
           const dd = etalon - value
-          if (dd > MIN_SENSE && dd < MAX_SENSE) activePoints++
+          if (dd > this.#min_sense && dd < this.#max_sense) activePoints++
         }
       }
       frame.active = activePoints > this.#pathos
@@ -307,6 +309,9 @@ export class Kinect {
       corners: this.#corners,
       min_depth: this.#min_depth,
       max_depth: this.#max_depth,
+      pathos: this.#pathos,
+      min_sense: this.#min_sense,
+      max_sense: this.#max_sense,
       frames: this.#frames.map(f => f.toJSON())
     }
   }
@@ -331,6 +336,11 @@ export class Kinect {
     this.#corners = data.corners ?? [0,0,WIDTH,HEIGHT]
     this.#min_depth = data.min_depth ?? MIN_DEPTH
     this.#max_depth = data.max_depth ?? MAX_DEPTH
+
+    this.#pathos = data.pathos ?? POINTS_TO_ACTIVE
+    this.#min_sense = data.min_sense ?? MIN_SENSE
+    this.#max_sense = data.max_sense ?? MAX_SENSE
+
     if (Array.isArray(data.frames))
       this.#frames = data.frames.map(f => {
         const frame = new Frame(f)
@@ -346,13 +356,6 @@ export class Kinect {
     switch(event.key.toUpperCase()) {
       case "K":
         this.visible = !this.visible
-        break
-
-      case "P":
-        const pathos = Number.parseInt(prompt("Enter points to active value", this.#pathos))
-        if (Number.isFinite(pathos)) {
-          this.#pathos = pathos
-        }
         break
 
       case "S":
