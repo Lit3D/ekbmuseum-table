@@ -362,6 +362,10 @@ strong,
   align-content: center;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+
 }
 
 .video-container video {

@@ -44,7 +44,7 @@ ipcRenderer.on("message", (_, {type, detail }) => {
 })
 
 kinect.addEventListener("active", ({detail}) => {
-  render(detail)
+  //render(detail)
 })
 
 renderVideo()
