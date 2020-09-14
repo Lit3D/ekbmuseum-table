@@ -136,9 +136,8 @@ export class Kinect extends EventTarget {
   #frames = []
   get isFrameActive() { return this.#frames.some(f => f.selected) }
 
-  #onActive = event => {
-    console.dir(event)
-    //this.dispatchEvent(event)
+  #onActive = ({detail}) => {
+    this.dispatchEvent(new CustomEvent("active", { detail }))
   }
 
   addFrame() {
