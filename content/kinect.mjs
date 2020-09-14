@@ -228,6 +228,7 @@ export class Kinect extends EventTarget {
   #detect = depth => {
     if (this.#trainingDepthMode) return
 
+    const activeFrames = []
     for (const frame of this.#frames) {
       const {x1, x2, y1, y2} = frame
       let activePoints = 0
@@ -243,8 +244,19 @@ export class Kinect extends EventTarget {
           if (dd > this.#min_sense && dd < this.#max_sense) activePoints++
         }
       }
-      frame.active = activePoints > this.#pathos
+      if (activePoints > this.#pathos) {
+        activeFrames.push(frame)
+      }
     }
+
+    if (activeFrames.length > 1) {
+      this.#frames.forEach(f => f.active = false)
+      return
+    }
+
+    const frame = activeFrames.pop()
+    this.#frames.filter(f => f !== frame).forEach(f => f.active = false)
+    frame.active = true
   }
 
   #render = depth => {
