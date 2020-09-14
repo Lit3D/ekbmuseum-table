@@ -4,7 +4,7 @@ const HEIGHT = 424
 
 const MIN_DEPTH = 0
 const MAX_DEPTH = 4500
-const SENS_DISTANCE = 100
+const SENS_DISTANCE = 10
 
 const FRAME_SIZE = 100
 
@@ -177,6 +177,7 @@ export class Kinect {
       const y = Math.floor(depthPixelIndex / 512)
       const x = depthPixelIndex - y * 512
       const value = depth[depthPixelIndex] ?? 0
+      const etalon = this.#etalon[depthPixelIndex] ?? 0
       depthPixelIndex++
 
       // Global borders
@@ -199,11 +200,14 @@ export class Kinect {
         }
 
         if (frame.point(x,y)) {
-          this.#pixelArray[i  ] = 0xff
-          this.#pixelArray[i+1] = 0x00
-          this.#pixelArray[i+2] = 0x00
-          this.#pixelArray[i+3] = 0xff
-          continue pointsLoop
+          const dd = etalon - value
+          if (dd > 0 && dd < SENS_DISTANCE) {
+            this.#pixelArray[i  ] = 0xff
+            this.#pixelArray[i+1] = 0x00
+            this.#pixelArray[i+2] = 0x00
+            this.#pixelArray[i+3] = 0xff
+            continue pointsLoop
+          }
         }
       }
 
