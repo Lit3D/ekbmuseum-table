@@ -7,6 +7,19 @@ import { Templates } from "./buildings-templates.mjs"
 const BUILDINGS_DATA_URL = "buildings.json"
 const VIDEO_SRC = "/video/plotina.mp4"
 
+const throttleDepthFrame = limit => {
+  let inThrottle
+  return function(detail) {
+    if (!inThrottle) {
+      kinect.depthFrame(detail)
+      inThrottle = true
+      setTimeout(() => inThrottle = false, limit)
+    }
+  }
+}
+
+const depthFrame = throttleDepthFrame(250)
+
 async function renderVideo() {
   document.body.innerHTML = `
       <div class="video-container">
@@ -38,7 +51,7 @@ ipcRenderer.on("message", (_, {type, detail }) => {
       break
 
     case "depth":
-      kinect.depthFrame(detail)
+      depthFrame(detail)
       break
   }
 })
