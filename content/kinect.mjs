@@ -4,7 +4,8 @@ const HEIGHT = 424
 
 const MIN_DEPTH = 0
 const MAX_DEPTH = 4500
-const SENS_DISTANCE = 10
+const MIN_SENSE = 5
+const MAX_SENSE = 10
 
 const FRAME_SIZE = 100
 
@@ -106,6 +107,9 @@ export class Kinect {
   #min_depth = MIN_DEPTH
   #max_depth = MAX_DEPTH
 
+  #min_sens = MIN_SENSE
+  #max_sens = MAX_SENSE
+
   #frames = []
   get isFrameActive() { return this.#frames.some(f => f.selected) }
 
@@ -201,7 +205,8 @@ export class Kinect {
 
         if (frame.point(x,y)) {
           const dd = etalon - value
-          if (dd > 0 && dd < SENS_DISTANCE) {
+          console.log(dd)
+          if (dd > 0 && dd < 10) {
             this.#pixelArray[i  ] = 0xff
             this.#pixelArray[i+1] = 0x00
             this.#pixelArray[i+2] = 0x00
