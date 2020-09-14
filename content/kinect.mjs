@@ -12,7 +12,7 @@ const POINTS_TO_ACTIVE = 100
 
 const DATA_URL = "kinect.json"
 
-class Frame {
+class Frame extends EventTarget {
   #action = -1
   #x = 0
   #y = 0
@@ -42,6 +42,7 @@ class Frame {
   set active(value) {
     if (value && !this.#active) {
       console.log("Active: ", this.#action)
+      this.dispatchEvent(new CustomEvent("active", { detail: this.#action }))
     }
     this.#active = value
   }
@@ -120,7 +121,7 @@ class Frame {
   }
 }
 
-export class Kinect {
+export class Kinect extends EventTarget {
 
   #corners = [0,0,WIDTH,HEIGHT]
 
@@ -134,9 +135,14 @@ export class Kinect {
   #frames = []
   get isFrameActive() { return this.#frames.some(f => f.selected) }
 
+  #onActive = event => {
+    this.dispatchEvent("active", event)
+  }
+
   addFrame() {
     const frame = new Frame()
     window.addEventListener("keydown", frame.keydown)
+    frame.addEventListener("active", this.#onActive)
     frame.select()
     this.#frames.forEach(f => f.unselect())
     this.#frames = [...this.#frames, frame]
@@ -146,6 +152,7 @@ export class Kinect {
     const frame = this.#frames.find(f => f.selected)
     if (!frame) return
     window.removeEventListener("keydown", frame.keydown)
+    frame.removeEventListener("active", this.#onActive)
     this.#frames = this.#frames.filter(f => f !== frame)
   }
 
@@ -364,6 +371,7 @@ export class Kinect {
       this.#frames = data.frames.map(f => {
         const frame = new Frame(f)
         window.addEventListener("keydown", frame.keydown)
+        frame.addEventListener("active", this.#onActive)
         return frame
       })
     else
