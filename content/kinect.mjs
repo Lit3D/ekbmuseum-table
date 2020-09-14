@@ -42,6 +42,14 @@ class Frame {
     return false
   }
 
+  point(x, y) {
+    const x1 = this.#x
+    const y1 = this.#y
+    const x2 = this.#x + this.#w
+    const y2 = this.#y + this.#h
+    return x >= x1 && x <= x2 && y >= y1 && y <= y2
+  }
+
   toJSON() {
     return [this.#x, this.#y, this.#w, this.#h, this.#action]
   }
@@ -180,11 +188,19 @@ export class Kinect {
         continue
       }
 
-      // Frame border
+      // Frames
       for (const frame of this.#frames) {
         if (frame.border(x,y)) {
           this.#pixelArray[i  ] = frame.selected ? 0xff : 0x00
           this.#pixelArray[i+1] = frame.selected ? 0x00 : 0xff
+          this.#pixelArray[i+2] = 0x00
+          this.#pixelArray[i+3] = 0xff
+          continue pointsLoop
+        }
+
+        if (frame.point(x,y)) {
+          this.#pixelArray[i  ] = 0xff
+          this.#pixelArray[i+1] = 0x00
           this.#pixelArray[i+2] = 0x00
           this.#pixelArray[i+3] = 0xff
           continue pointsLoop
