@@ -19,6 +19,11 @@ class Frame {
   #w = 0
   #h = 0
 
+  get x1() { return this.#x }
+  get x2() { return this.#x + this.#w }
+  get y1() { return this.#y }
+  get y2() { return this.#y + this.#h }
+
   #selected = false
   get selected() { return this.#selected }
   select = () => this.#selected = true
@@ -32,9 +37,11 @@ class Frame {
     this.#action = action
   }
 
-  activePoints = 0
-  get isActive() { this.activePoints > FRAME_POINTS_TO_ACTIVE }
-  unactive() { this.activePoints = 0 }
+  #active = false
+  get active() { return this.#active }
+  set active(value) {
+    this.#active = value
+  }
 
   border(x, y) {
     const x1 = this.#x
@@ -202,14 +209,35 @@ export class Kinect {
     })
   }
 
+  #detect = depth => {
+    if (this.#trainingDepthMode) return
+
+    this.#frames.forEach(f => f.unactive())
+    for (const frame of this.#frames) {
+      const {x1, x2, y1, y2} = frame
+      let activePoints = 0
+      for (let y = y1; y <= y2; y++) {
+        for (let x = x1; x <= x2; x++) {
+          const i = y * WIDTH + x
+
+          const etalon = this.#etalon[i]
+          const value = depth[i]
+          if  (etalon <= 0 || value <= 0) continue
+
+          const dd = etalon - value
+          if (dd > MIN_SENSE && dd < MAX_SENSE) activePoints++
+        }
+      }
+      frame.active = activePoints > 10
+    }
+  }
+
   #render = depth => {
     if (!this.#visible) return
 
     let depthPixelIndex = 0
     const [ x1, y1, x2, y2 ] = this.#corners
     const depthZone = this.#max_depth - this.#min_depth
-
-    this.#frames.forEach(f => f.unactive())
 
     pointsLoop:
     for (let i = 0; i < this.#imageDataSize; i+=4) {
@@ -233,7 +261,7 @@ export class Kinect {
         if (frame.border(x,y)) {
           this.#pixelArray[i  ] = frame.selected ? 0xff : 0x00
           this.#pixelArray[i+1] = frame.selected ? 0x00 : 0xff
-          this.#pixelArray[i+2] = frame.isActive ? 0xff : 0x00
+          this.#pixelArray[i+2] = frame.active   ? 0xff : 0x00
           this.#pixelArray[i+3] = 0xff
           continue pointsLoop
         }
@@ -245,7 +273,6 @@ export class Kinect {
             this.#pixelArray[i+1] = 0x00
             this.#pixelArray[i+2] = 0x00
             this.#pixelArray[i+3] = 0xff
-            frame.activePoints = frame.activePoints + 1
             continue pointsLoop
           }
         }
@@ -275,7 +302,7 @@ export class Kinect {
   #showTraining = false
   depthFrame = ({depth}) => {
     this.#trainingDepth(depth)
-    //this.#trainingDelta(depth)
+    this.#detect(depth)
     this.#render(this.#showTraining ? this.#etalon : depth)
   }
 
