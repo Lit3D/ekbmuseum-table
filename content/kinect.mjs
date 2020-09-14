@@ -189,7 +189,8 @@ export class Kinect {
       if (x < x1 || x > x2 || y < y1 || y > y2) return 0
 
       const b = depth[i] ?? 0
-      if (a > 0 && b > 0) return Math.round((a + b) / 2)
+      //if (a > 0 && b > 0) return Math.round((a + b) / 2)
+      if (a > 0 && b > 0) return Math.min(a, b)
       if (b > 0) return b
       return a
     })
