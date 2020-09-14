@@ -250,13 +250,16 @@ export class Kinect {
     this.#min_depth = data.min_depth ?? MIN_DEPTH
     this.#max_depth = data.max_depth ?? MAX_DEPTH
     if (Array.isArray(data.frames))
-      this.#frames = data.frames.map(f => new Frame(f))
+      this.#frames = data.frames.map(f => {
+        const frame = new Frame(f)
+        window.addEventListener("keydown", frame.keydown)
+        return frame
+      })
     else
       this.#frames = []
   }
 
   #keydown = event => {
-    console.log(event.key.toUpperCase())
     let i
     switch(event.key.toUpperCase()) {
       case "K":
