@@ -11,4 +11,5 @@
 
   z-index: 999;
   box-shadow: 0 0 100px rgb(0 0 0 / .7);
+  transform: scale(2.0);
 }

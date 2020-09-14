@@ -8,10 +8,10 @@ const BUILDINGS_DATA_URL = "buildings.json"
 const VIDEO_SRC = "/video/plotina.mp4"
 
 async function renderVideo() {
-  document.body.innerHTML = `
-      <div class="video-container">
-        <video autoplay="true" muted="muted" loop="true" class="fit-contain" src="${VIDEO_SRC}"></video>
-      </div>`
+  // document.body.innerHTML = `
+  //     <div class="video-container">
+  //       <video autoplay="true" muted="muted" loop="true" class="fit-contain" src="${VIDEO_SRC}"></video>
+  //     </div>`
 }
 
 async function render(detail) {
