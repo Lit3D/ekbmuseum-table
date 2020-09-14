@@ -205,7 +205,7 @@ export class Kinect {
 
         if (frame.point(x,y)) {
           const dd = etalon - value
-          if (dd <> 0) console.log(dd)
+          if (dd !== 0) console.log(dd)
           if (dd > 0 && dd < 10) {
             this.#pixelArray[i  ] = 0xff
             this.#pixelArray[i+1] = 0x00
