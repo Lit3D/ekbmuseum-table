@@ -356,14 +356,14 @@ strong,
 
 .video-container {
   width: 1600px;
-  height: 1200px;
+  height: 1180px;
   background-color: #b3ada3;
   display: flex;
   align-content: center;
   justify-content: center;
   align-items: center;
   position: absolute;
-  left: 0;
+  left: 160px;
   top: 0;
 
 }
