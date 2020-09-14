@@ -13,7 +13,7 @@ const POINTS_TO_ACTIVE = 100
 const DATA_URL = "kinect.json"
 
 class Frame {
-  #action = undefined
+  #action = -1
   #x = 0
   #y = 0
   #w = 0
@@ -40,6 +40,9 @@ class Frame {
   #active = false
   get active() { return this.#active }
   set active(value) {
+    if (value && !this.#active) {
+      console.log("Active: ", this.#action)
+    }
     this.#active = value
   }
 
@@ -70,8 +73,13 @@ class Frame {
   keydown = event => {
     if (!this.#selected) return
     switch(event.key.toUpperCase()) {
-      case "A":
-        // Action
+      case "+":
+        this.#action++
+        console.log(this.#action)
+        break
+      case "-":
+        this.#action--
+        console.log(this.#action)
         break
 
       case "ARROWUP":
@@ -211,6 +219,7 @@ export class Kinect {
   #detect = depth => {
     if (this.#trainingDepthMode) return
 
+    let activeCount = 0
     for (const frame of this.#frames) {
       const {x1, x2, y1, y2} = frame
       let activePoints = 0
@@ -226,7 +235,15 @@ export class Kinect {
           if (dd > this.#min_sense && dd < this.#max_sense) activePoints++
         }
       }
-      frame.active = activePoints > this.#pathos
+      if (activePoints > this.#pathos) {
+        frame.active = true
+        activeCount++
+      }
+    }
+
+    if (activeCount > 1) {
+      this.#frames.forEach(f => f.active = false)
+      return
     }
   }
 
