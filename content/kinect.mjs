@@ -249,7 +249,7 @@ export class Kinect extends EventTarget {
       }
     }
 
-    if (activeFrames.length > 1) {
+    if (activeFrames.length !== 1) {
       this.#frames.forEach(f => f.active = false)
       return
     }
