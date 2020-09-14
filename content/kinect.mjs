@@ -172,6 +172,7 @@ export class Kinect {
       setTimeout(() => {
         console.log("Stop training")
         this.#trainingDeltaMode = false
+        this.#depthDelta = Math.ceil(this.#depthDelta)
         console.log(`#depthDelta = ${this.#depthDelta}`)
       }, 30 * 1000) // 10 sec
     }, 30 * 1000) // 10 sec
@@ -251,7 +252,7 @@ export class Kinect {
 
         if (frame.point(x,y)) {
           const dd = etalon - value
-          if (dd > 0 && dd < 10) {
+          if (dd > 0 && dd > this.#depthDelta && dd < 10) {
             this.#pixelArray[i  ] = 0xff
             this.#pixelArray[i+1] = 0x00
             this.#pixelArray[i+2] = 0x00
