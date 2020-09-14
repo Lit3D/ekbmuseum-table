@@ -23,7 +23,7 @@ const depthFrame = throttleDepthFrame(250)
 async function renderVideo() {
   document.body.innerHTML = `
       <div class="video-container">
-        <video autoplay="true" muted="muted" loop="true" class="fit-contain" src="${VIDEO_SRC}"></video>
+        <video autoplay="true" loop="true" class="fit-contain" src="${VIDEO_SRC}"></video>
       </div>`
 }
 
