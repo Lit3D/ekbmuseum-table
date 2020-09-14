@@ -238,6 +238,8 @@ export class Kinect {
       if (activePoints > this.#pathos) {
         frame.active = true
         activeCount++
+      } else {
+        frame.active = false
       }
     }
 
