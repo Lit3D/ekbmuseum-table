@@ -173,8 +173,8 @@ export class Kinect {
         console.log("Stop training")
         this.#trainingDeltaMode = false
         console.log(`#depthDelta = ${this.#depthDelta}`)
-      }, 10 * 1000) // 10 sec
-    }, 10 * 1000) // 10 sec
+      }, 30 * 1000) // 10 sec
+    }, 30 * 1000) // 10 sec
   }
 
   #trainingDepthMode = false
