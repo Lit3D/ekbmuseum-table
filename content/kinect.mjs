@@ -30,6 +30,7 @@ class Frame extends EventTarget {
   unselect = () => this.#selected = false
 
   constructor([x = 0, y = 0, w = FRAME_SIZE, h = FRAME_SIZE, action = -1] = []){
+    super()
     this.#x = x
     this.#y = y
     this.#w = w
@@ -179,6 +180,7 @@ export class Kinect extends EventTarget {
   }
 
   constructor() {
+    super()
     this.#canvas.classList.add("depth-canvas")
     this.#canvas.width = WIDTH
     this.#canvas.height = HEIGHT
