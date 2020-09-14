@@ -212,7 +212,6 @@ export class Kinect {
   #detect = depth => {
     if (this.#trainingDepthMode) return
 
-    this.#frames.forEach(f => f.unactive())
     for (const frame of this.#frames) {
       const {x1, x2, y1, y2} = frame
       let activePoints = 0
