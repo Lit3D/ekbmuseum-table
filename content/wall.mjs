@@ -27,7 +27,11 @@ async function renderVideo() {
       </div>`
 }
 
+let currentDetail = 0
 async function render(detail) {
+  if (detail === currentDetail) return
+  currentDetail = detail
+
   kinect.visible = false
   if (!detail) return renderVideo()
 
@@ -57,7 +61,7 @@ ipcRenderer.on("message", (_, {type, detail }) => {
 })
 
 kinect.addEventListener("active", ({detail}) => {
-  //render(detail)
+  render(detail)
 })
 
 renderVideo()
