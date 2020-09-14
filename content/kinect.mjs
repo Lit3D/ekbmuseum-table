@@ -4,8 +4,8 @@ const HEIGHT = 424
 
 const MIN_DEPTH = 0
 const MAX_DEPTH = 4500
-const MIN_SENSE = 5
-const MAX_SENSE = 10
+const MIN_SENSE = 3
+const MAX_SENSE = 30
 
 const FRAME_SIZE = 100
 
@@ -107,10 +107,10 @@ export class Kinect {
   #min_depth = MIN_DEPTH
   #max_depth = MAX_DEPTH
 
-  #min_sens = MIN_SENSE
-  #max_sens = MAX_SENSE
+  //#min_sens = MIN_SENSE
+  //#max_sens = MAX_SENSE
 
-  #depthDelta = 0
+  //#depthDelta = 0
 
   #frames = []
   get isFrameActive() { return this.#frames.some(f => f.selected) }
@@ -166,15 +166,16 @@ export class Kinect {
     this.#trainingDepthMode = true
     setTimeout(() => {
       this.#trainingDepthMode = false
+      console.log("Stop training")
 
-      console.log("Start training depth delta")
-      this.#trainingDeltaMode = true
-      setTimeout(() => {
-        console.log("Stop training")
-        this.#trainingDeltaMode = false
-        this.#depthDelta = Math.ceil(this.#depthDelta)
-        console.log(`#depthDelta = ${this.#depthDelta}`)
-      }, 30 * 1000) // 10 sec
+      // console.log("Start training depth delta")
+      // this.#trainingDeltaMode = true
+      // setTimeout(() => {
+      //   console.log("Stop training")
+      //   this.#trainingDeltaMode = false
+      //   this.#depthDelta = Math.ceil(this.#depthDelta)
+      //   console.log(`#depthDelta = ${this.#depthDelta}`)
+      // }, 30 * 1000) // 10 sec
     }, 30 * 1000) // 10 sec
   }
 
@@ -194,27 +195,6 @@ export class Kinect {
       if (b > 0) return b
       return a
     })
-  }
-
-  #trainingDeltaMode = false
-  #trainingDelta = depth => {
-    if (!this.#trainingDeltaMode) return
-
-    this.#depthDelta = this.#etalon.reduce((acc, d1, i) => {
-      const y = Math.floor(i / WIDTH)
-      const x = i - y * WIDTH
-      if (d1 <= 0) return acc
-
-      for (const frame of this.#frames) {
-        if (frame.point(x,y)) {
-          const d2 = depth[i] ?? 0
-          if (d2 <= 0) return acc
-          return (Math.abs(d1 - d2) + acc) / 2
-        }
-      }
-
-      return acc
-    }, this.#depthDelta)
   }
 
   #render = depth => {
@@ -253,7 +233,7 @@ export class Kinect {
 
         if (frame.point(x,y)) {
           const dd = etalon - value
-          if (dd > 0 && dd < 100) {
+          if (dd > MIN_SENSE && dd < MAX_SENSE) {
             this.#pixelArray[i  ] = 0xff
             this.#pixelArray[i+1] = 0x00
             this.#pixelArray[i+2] = 0x00
@@ -285,7 +265,7 @@ export class Kinect {
   #showTraining = false
   depthFrame = ({depth}) => {
     this.#trainingDepth(depth)
-    this.#trainingDelta(depth)
+    //this.#trainingDelta(depth)
     this.#render(this.#showTraining ? this.#etalon : depth)
   }
 
