@@ -253,7 +253,7 @@ export class Kinect {
 
         if (frame.point(x,y)) {
           const dd = etalon - value
-          if (dd > 0 && dd > this.#depthDelta && dd < 10) {
+          if (dd > 0 && dd < 100) {
             this.#pixelArray[i  ] = 0xff
             this.#pixelArray[i+1] = 0x00
             this.#pixelArray[i+2] = 0x00
