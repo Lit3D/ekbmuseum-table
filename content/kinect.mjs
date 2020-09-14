@@ -8,6 +8,7 @@ const MIN_SENSE = 3
 const MAX_SENSE = 30
 
 const FRAME_SIZE = 100
+const FRAME_POINTS_TO_ACTIVE = 100
 
 const DATA_URL = "kinect.json"
 
@@ -30,6 +31,10 @@ class Frame {
     this.#h = h
     this.#action = action
   }
+
+  activePoints = 0
+  get isActive() { this.activePoints > FRAME_POINTS_TO_ACTIVE }
+  unactive() { this.activePoints = 0 }
 
   border(x, y) {
     const x1 = this.#x
@@ -204,6 +209,8 @@ export class Kinect {
     const [ x1, y1, x2, y2 ] = this.#corners
     const depthZone = this.#max_depth - this.#min_depth
 
+    this.#frames.forEach(f => f.unactive())
+
     pointsLoop:
     for (let i = 0; i < this.#imageDataSize; i+=4) {
       const y = Math.floor(depthPixelIndex / WIDTH)
@@ -226,7 +233,7 @@ export class Kinect {
         if (frame.border(x,y)) {
           this.#pixelArray[i  ] = frame.selected ? 0xff : 0x00
           this.#pixelArray[i+1] = frame.selected ? 0x00 : 0xff
-          this.#pixelArray[i+2] = 0x00
+          this.#pixelArray[i+2] = frame.isActive ? 0xff : 0x00
           this.#pixelArray[i+3] = 0xff
           continue pointsLoop
         }
@@ -238,6 +245,7 @@ export class Kinect {
             this.#pixelArray[i+1] = 0x00
             this.#pixelArray[i+2] = 0x00
             this.#pixelArray[i+3] = 0xff
+            frame.activePoints = frame.activePoints + 1
             continue pointsLoop
           }
         }
@@ -259,6 +267,8 @@ export class Kinect {
       this.#pixelArray[i+2] = gray
       this.#pixelArray[i+3] = 0xff
     }
+
+
     requestAnimationFrame(() => this.#ctx.putImageData(this.#imageData, 0, 0))
   }
 
