@@ -107,7 +107,7 @@ async function initViewPorts({mac, IPv4, IPv6, viewPorts}) {
       if (message.to && message.to !== id) return
       win.webContents.send("message", message.toJSON())
     })
-    win.webContents.openDevTools()
+    //win.webContents.openDevTools()
   }
 }
 
