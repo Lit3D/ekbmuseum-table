@@ -21,10 +21,12 @@ const throttleDepthFrame = limit => {
 const depthFrame = throttleDepthFrame(250)
 
 async function renderVideo() {
-  document.body.innerHTML = `
-      <div class="video-container">
-        <video autoplay="true" loop="true" class="fit-contain" src="${VIDEO_SRC}"></video>
-      </div>`
+  requestAnimationFrame(() => {
+    document.body.innerHTML = `
+        <div class="video-container">
+          <video autoplay="true" loop="true" class="fit-contain" src="${VIDEO_SRC}"></video>
+        </div>`
+  })
 }
 
 let currentDetail = 0
@@ -44,8 +46,9 @@ async function render(detail) {
     document.body.innerHTML = "ERROR: Incorrect ID"
     return
   }
-
-  document.body.innerHTML = Templates[detail](data)
+  requestAnimationFrame(() => {
+    document.body.innerHTML = Templates[detail](data)
+  })
 }
 
 ipcRenderer.on("message", (_, {type, detail }) => {
